@@ -6,4 +6,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\TMDb.Application\TMDb.Application.csproj" />
+    <ProjectReference Include="..\..\src\TMDb.Infrastructure\TMDb.Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\TMDb.Domain\TMDb.Domain.csproj" />
+  </ItemGroup>
+
 </Project>
