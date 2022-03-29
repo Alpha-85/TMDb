@@ -18,7 +18,7 @@ public class MovieController : ControllerBase
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> Create(MovieRequestModel request)
+    public async Task<IActionResult> Create([FromBody] MovieRequestModel request)
     {
         throw new NotImplementedException();
     }

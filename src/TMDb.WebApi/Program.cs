@@ -1,3 +1,4 @@
+using FluentValidation.AspNetCore;
 using TMDb.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,10 +10,10 @@ var services = builder.Services;
 services.AddInfrastructure();
 
 
-
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddFluentValidation();
 
 var app = builder.Build();
 
