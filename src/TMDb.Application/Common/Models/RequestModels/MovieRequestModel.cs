@@ -7,15 +7,15 @@ namespace TMDb.Application.Common.Models.RequestModels;
 public class MovieRequestModel
 {
     [JsonPropertyName("title")]
-    public string Title { get; set; }
+    public string? Title { get; set; }
     [JsonPropertyName("year")]
-    public int Year { get; set; }
+    public int? Year { get; set; }
     [JsonPropertyName("synopsis")]
-    public string Synopsis { get; set; }
+    public string? Synopsis { get; set; }
     [JsonPropertyName("director")]
-    public string Director { get; set; }
+    public string? Director { get; set; }
     [JsonPropertyName("genreType")]
-    public GenreType GenreType { get; set; }
+    public List<GenreType>? Genres { get; set; }
     [JsonPropertyName("actors")]
-    public List<ActorModel> Actors { get; set; }
+    public List<ActorModel>? Actors { get; set; }
 }

@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using TMDb.Application.Common.Models.RequestModels;
+using TMDb.Application.Movies.Commands;
 
 namespace TMDb.WebApi.Controllers;
 
@@ -16,10 +17,15 @@ public class MovieController : ControllerBase
     }
 
     [HttpPost]
-    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> Create([FromBody] MovieRequestModel request)
+    public async Task<IActionResult> Create([FromBody] MovieRequestModel request,CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        var result = await _mediator.Send(new AddMovieCommand(request), cancellationToken);
+
+        if (result is false)
+            return BadRequest();
+
+        return Ok();
     }
 }
