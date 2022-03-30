@@ -4,7 +4,7 @@ using TMDb.Application.Common.Models.RequestModels;
 using TMDb.Domain.Common.Enums;
 using TMDb.Domain.Entities;
 
-namespace TMDb.Application.Common.Models.Mappings;
+namespace TMDb.Application.Common.Mappings;
 
 public class MappingProfile : Profile
 {
@@ -13,7 +13,6 @@ public class MappingProfile : Profile
         CreateMap<MovieRequestModel, Movie>();
         CreateMap<ActorModel, Actor>();
         CreateMap<GenreType, Genre>();
-
 
     }
 }

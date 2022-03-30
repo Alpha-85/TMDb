@@ -21,6 +21,7 @@ public class MovieController : ControllerBase
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Create([FromBody] MovieRequestModel request,CancellationToken cancellationToken)
     {
+
         var result = await _mediator.Send(new AddMovieCommand(request), cancellationToken);
 
         if (result is false)

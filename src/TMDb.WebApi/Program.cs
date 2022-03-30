@@ -1,6 +1,6 @@
+using Microsoft.OpenApi.Models;
 using System.Text.Json.Serialization;
 using FluentValidation.AspNetCore;
-using Microsoft.OpenApi.Models;
 using TMDb.Application;
 using TMDb.Infrastructure;
 
@@ -18,10 +18,13 @@ builder.Services.AddControllers()
     .AddJsonOptions(opt => opt.JsonSerializerOptions.Converters
         .Add(new JsonStringEnumConverter()));
 
+builder.Services.AddMvc()
+    .AddFluentValidation();
+
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(opt => 
+builder.Services.AddSwaggerGen(opt =>
     opt.SwaggerDoc("v1", new OpenApiInfo { Title = "WebApi", Version = "v1" }));
-builder.Services.AddFluentValidation();
+
 
 var app = builder.Build();
 
@@ -33,7 +36,6 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
 app.UseAuthorization();
 
 app.MapControllers();

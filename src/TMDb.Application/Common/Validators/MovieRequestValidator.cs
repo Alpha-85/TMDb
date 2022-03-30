@@ -1,37 +1,38 @@
 ﻿using FluentValidation;
+using TMDb.Application.Common.Models.RequestModels;
 
-namespace TMDb.Application.Movies.Commands;
+namespace TMDb.Application.Common.Validators;
 
-public class AddMovieCommandValidator : AbstractValidator<AddMovieCommand>
+public class MovieRequestValidator : AbstractValidator<MovieRequestModel>
 {
-    public AddMovieCommandValidator()
+    public MovieRequestValidator()
     {
-        RuleFor(v => v.Movie.Title)
+        RuleFor(v => v.Title)
             .MaximumLength(100)
             .MinimumLength(5)
             .Matches("^[a-zA-Z0-9 ]*$")
             .NotEmpty();
 
-        RuleFor(v => v.Movie.Director)
+        RuleFor(v => v.Director)
             .MaximumLength(100)
             .MinimumLength(5)
             .Matches("^[a-zA-Z0-9 ]*$")
             .NotEmpty();
 
-        RuleFor(v => v.Movie.Synopsis)
+        RuleFor(v => v.Synopsis)
             .MaximumLength(200)
             .MinimumLength(5)
             .Matches("^[a-zA-Z0-9 ]*$")
             .NotEmpty();
 
-        RuleFor(v => v.Movie.Year)
+        RuleFor(v => v.Year)
             .GreaterThanOrEqualTo(1895)
             .NotNull();
 
-        RuleFor(v => v.Movie.Genres)
+        RuleFor(v => v.Genres)
             .IsInEnum();
 
-        RuleForEach(x => x.Movie.Actors).ChildRules(child =>
+        RuleForEach(x => x.Actors).ChildRules(child =>
         {
             child.RuleFor(x => x.FirstName).NotEmpty();
             child.RuleFor(d => d.LastName).NotEmpty();
