@@ -15,7 +15,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{1137BB2A-2
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TMDb.Application.UnitTests", "test\TMDb.Application.UnitTests\TMDb.Application.UnitTests.csproj", "{13056E14-DBA7-4677-AB50-10C21815890C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TMDb.WebApi", "src\TMDb.WebApi\TMDb.WebApi.csproj", "{404D571C-69DB-4CA9-B7C3-4AA0F7D13F43}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TMDb.WebApi", "src\TMDb.WebApi\TMDb.WebApi.csproj", "{404D571C-69DB-4CA9-B7C3-4AA0F7D13F43}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
