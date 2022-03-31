@@ -43,4 +43,17 @@ public class MovieController : ControllerBase
 
         return Ok(result);
     }
+
+    [HttpGet("{id:int}")]
+    [ProducesResponseType(StatusCodes.Status202Accepted)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> DeleteAsync(int id, CancellationToken cancellationToken)
+    {
+        var result = await _mediator.Send(new DeleteMovieCommand(id), cancellationToken);
+
+        if (result is false)
+            return NotFound();
+
+        return Accepted();
+    }
 }
