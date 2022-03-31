@@ -1,5 +1,4 @@
-﻿using System.Data.Common;
-using AutoMapper;
+﻿using AutoMapper;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using TMDb.Application.Common.Interfaces;
@@ -7,7 +6,7 @@ using TMDb.Domain.Entities;
 
 namespace TMDb.Application.Movies.Commands;
 
-public class AddMovieCommandHandler : IRequestHandler<AddMovieCommand, bool>
+public class AddMovieCommandHandler : IRequestHandler<AddMovieCommand, int?>
 {
     private readonly IApplicationDbContext _context;
     private readonly ILogger<AddMovieCommandHandler> _logger;
@@ -20,7 +19,7 @@ public class AddMovieCommandHandler : IRequestHandler<AddMovieCommand, bool>
         _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
     }
 
-    public async Task<bool> Handle(AddMovieCommand request, CancellationToken cancellationToken)
+    public async Task<int?> Handle(AddMovieCommand request, CancellationToken cancellationToken)
     {
 
         var result = _mapper.Map<Movie>(request.Movie);
@@ -33,13 +32,13 @@ public class AddMovieCommandHandler : IRequestHandler<AddMovieCommand, bool>
         {
             await _context.SaveChangesAsync(cancellationToken);
         }
-        catch (DbException exception)
+        catch (Exception)
         {
-            _logger.LogError("Database Error: Failed to insert {exception}", exception);
-            return false;
+            _logger.LogError("Database Error: Failed to insert {request.Movie}", request.Movie);
+            return null;
         }
 
-        return true;
+        return result.Id;
 
     }
 }

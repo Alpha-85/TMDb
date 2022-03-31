@@ -8,11 +8,10 @@ namespace TMDb.Infrastructure.Persistence;
 
 public class ApplicationDbContext : DbContext, IApplicationDbContext
 {
-    private readonly IDateTime _dateTime;
 
-    public ApplicationDbContext(DbContextOptions options, IDateTime dateTime) : base(options)
+    public ApplicationDbContext(DbContextOptions options) : base(options)
     {
-        _dateTime = dateTime ?? throw new ArgumentNullException(nameof(dateTime));
+
     }
 
     public DbSet<Movie>? Movies { get; set; }
@@ -26,10 +25,10 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
             switch (entry.State)
             {
                 case EntityState.Added:
-                    entry.Entity.Created = _dateTime.Now;
+                    entry.Entity.Created = DateTime.Now;
                     break;
                 case EntityState.Modified:
-                    entry.Entity.LastModified = _dateTime.Now;
+                    entry.Entity.LastModified = DateTime.Now;
                     break;
 
             }

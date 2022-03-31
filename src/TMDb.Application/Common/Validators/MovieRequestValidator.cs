@@ -22,7 +22,6 @@ public class MovieRequestValidator : AbstractValidator<MovieRequestModel>
         RuleFor(v => v.Synopsis)
             .MaximumLength(200)
             .MinimumLength(5)
-            .Matches("^[a-zA-Z0-9 ]*$")
             .NotEmpty();
 
         RuleFor(v => v.Year)
@@ -30,7 +29,8 @@ public class MovieRequestValidator : AbstractValidator<MovieRequestModel>
             .NotNull();
 
         RuleFor(v => v.Genres)
-            .IsInEnum();
+            .NotNull()
+            .NotEmpty();
 
         RuleForEach(x => x.Actors).ChildRules(child =>
         {

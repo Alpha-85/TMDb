@@ -14,8 +14,8 @@ public class MovieRequestModel
     public string? Synopsis { get; set; }
     [JsonPropertyName("director")]
     public string? Director { get; set; }
-    [JsonPropertyName("genreType")]
-    public List<GenreType>? Genres { get; set; }
+    [JsonPropertyName("genres")]
+    public List<GenreModel>? Genres { get; set; }
     [JsonPropertyName("actors")]
     public List<ActorModel>? Actors { get; set; }
 }
