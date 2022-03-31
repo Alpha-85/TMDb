@@ -3,7 +3,7 @@ using TMDb.Application.Common.Models.RequestModels;
 
 namespace TMDb.Application.Common.Validators;
 
-public class MovieRequestValidator : AbstractValidator<MovieRequestModel>
+public class MovieRequestValidator : AbstractValidator<MovieModel>
 {
     public MovieRequestValidator()
     {

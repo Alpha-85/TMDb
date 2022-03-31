@@ -18,8 +18,4 @@
     <ProjectReference Include="..\TMDb.Domain\TMDb.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Movies\Queries\" />
-  </ItemGroup>
-
 </Project>

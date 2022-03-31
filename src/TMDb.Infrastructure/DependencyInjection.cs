@@ -11,10 +11,10 @@ public static class DependencyInjection
     public static IServiceCollection AddInfrastructure(this IServiceCollection services)
     {
         services.AddDbContext<ApplicationDbContext>(options =>
-            options.UseInMemoryDatabase(Guid.NewGuid().ToString()));
+            options.UseInMemoryDatabase("TMDb"));
 
-        services.AddScoped<IApplicationDbContext>(provider =>
-            provider.GetService<ApplicationDbContext>() ?? throw new InvalidOperationException());
+        services.AddScoped<IApplicationDbContext>(provider => provider
+            .GetService<ApplicationDbContext>() ?? throw new InvalidOperationException());
 
         services.AddTransient<IDateTime, DateTimeService>();
 

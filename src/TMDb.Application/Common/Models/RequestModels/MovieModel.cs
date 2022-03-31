@@ -1,10 +1,9 @@
 ﻿using System.Text.Json.Serialization;
 using TMDb.Application.Common.Models.MovieModels;
-using TMDb.Domain.Common.Enums;
 
 namespace TMDb.Application.Common.Models.RequestModels;
 
-public class MovieRequestModel
+public class MovieModel
 {
     [JsonPropertyName("title")]
     public string? Title { get; set; }

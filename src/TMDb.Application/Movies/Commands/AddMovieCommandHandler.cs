@@ -24,9 +24,10 @@ public class AddMovieCommandHandler : IRequestHandler<AddMovieCommand, int?>
 
         var result = _mapper.Map<Movie>(request.Movie);
 
-        _context.Actors?.AddRange(result.Actors);
-        _context.Genres?.AddRange(result.Genres);
-        _context.Movies?.Add(result);
+        _context.Movies.Add(result);
+        _context.Actors.AddRange(result.Actors);
+        _context.Genres.AddRange(result.Genres);
+        
 
         try
         {
