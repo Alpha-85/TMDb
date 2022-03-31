@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using TMDb.Application.Common.Models.RequestModels;
 using TMDb.Application.Movies.Commands;
+using TMDb.Application.Movies.Queries;
 
 namespace TMDb.WebApi.Controllers;
 
@@ -19,7 +20,7 @@ public class MovieController : ControllerBase
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> CreateAsync([FromBody] MovieRequestModel request,CancellationToken cancellationToken)
+    public async Task<IActionResult> CreateAsync([FromBody] MovieModel request,CancellationToken cancellationToken)
     {
 
         var result = await _mediator.Send(new AddMovieCommand(request), cancellationToken);
@@ -30,12 +31,16 @@ public class MovieController : ControllerBase
         return CreatedAtAction("Get", new { id = result }, result);
     }
 
-    [HttpGet("id")]
+    [HttpGet("{id:int}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> GetAsync([FromQuery] int id, CancellationToken cancellationToken)
+    public async Task<IActionResult> GetAsync(int id, CancellationToken cancellationToken)
     {
+        var result = await _mediator.Send(new GetMovieQuery(id), cancellationToken);
 
-        return Ok();
+        if (result is null)
+            return NotFound();
+
+        return Ok(result);
     }
 }

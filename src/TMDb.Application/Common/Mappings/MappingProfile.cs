@@ -11,7 +11,7 @@ public class MappingProfile : Profile
     {
         CreateMap<Actor, ActorModel>().ReverseMap();
         CreateMap<Genre, GenreModel>().ReverseMap();
-        CreateMap<Movie, MovieRequestModel>().ReverseMap();
+        CreateMap<Movie, MovieModel>().ReverseMap();
 
     }
 }

@@ -14,9 +14,9 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
 
     }
 
-    public DbSet<Movie>? Movies { get; set; }
-    public DbSet<Actor>? Actors { get; set; }
-    public DbSet<Genre>? Genres { get; set; }
+    public DbSet<Movie> Movies { get; set; } = null!;
+    public DbSet<Actor> Actors { get; set; } = null!;
+    public DbSet<Genre> Genres { get; set; } = null!;
 
     public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new())
     {

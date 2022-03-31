@@ -5,9 +5,9 @@ namespace TMDb.Application.Common.Interfaces;
 
 public interface IApplicationDbContext
 {
-    DbSet<Movie>? Movies { get; }
-    DbSet<Actor>? Actors { get; }
-    DbSet<Genre>? Genres { get; }
+    DbSet<Movie> Movies { get; }
+    DbSet<Actor> Actors { get; }
+    DbSet<Genre> Genres { get; }
 
     Task<int> SaveChangesAsync(CancellationToken cancellationToken);
 }

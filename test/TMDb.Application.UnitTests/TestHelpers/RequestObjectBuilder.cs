@@ -6,9 +6,9 @@ namespace TMDb.Application.UnitTests.TestHelpers;
 
 public static class RequestObjectBuilder
 {
-    public static MovieRequestModel GetMovieRequestModel()
+    public static MovieModel GetMovieRequestModel()
     {
-        var request = new MovieRequestModel
+        var request = new MovieModel
         {
             Title = "Conan the barbarian",
             Year = 1982,
