@@ -14,7 +14,7 @@ public class MovieRequestValidatorTests
     {
         // Arrange
         var validator = new MovieRequestValidator();
-        var movieRequest = RequestObjectBuilder.GetMovieRequestModel();
+        var movieRequest = MovieObjectBuilder.GetMovieModel();
 
         // Act
         var result = validator.TestValidate(movieRequest);
@@ -32,7 +32,7 @@ public class MovieRequestValidatorTests
     {
         // Arrange
         var validator = new MovieRequestValidator();
-        var movieRequest = RequestObjectBuilder.GetMovieRequestModel();
+        var movieRequest = MovieObjectBuilder.GetMovieModel();
         movieRequest.Title = title;
 
         // Act
@@ -51,7 +51,7 @@ public class MovieRequestValidatorTests
     {
         // Arrange
         var validator = new MovieRequestValidator();
-        var movieRequest = RequestObjectBuilder.GetMovieRequestModel();
+        var movieRequest = MovieObjectBuilder.GetMovieModel();
         movieRequest.Director = director;
 
         // Act
@@ -70,7 +70,7 @@ public class MovieRequestValidatorTests
     {
         // Arrange
         var validator = new MovieRequestValidator();
-        var movieRequest = RequestObjectBuilder.GetMovieRequestModel();
+        var movieRequest = MovieObjectBuilder.GetMovieModel();
         movieRequest.Synopsis = synopsis;
 
         // Act
@@ -87,7 +87,7 @@ public class MovieRequestValidatorTests
     {
         // Arrange
         var validator = new MovieRequestValidator();
-        var movieRequest = RequestObjectBuilder.GetMovieRequestModel();
+        var movieRequest = MovieObjectBuilder.GetMovieModel();
         movieRequest.Year = year;
 
         // Act
@@ -102,7 +102,7 @@ public class MovieRequestValidatorTests
     {
         // Arrange
         var validator = new MovieRequestValidator();
-        var movieRequest = RequestObjectBuilder.GetMovieRequestModel();
+        var movieRequest = MovieObjectBuilder.GetMovieModel();
         movieRequest.Genres = null;
 
         // Act
@@ -117,7 +117,7 @@ public class MovieRequestValidatorTests
     {
         // Arrange
         var validator = new MovieRequestValidator();
-        var movieRequest = RequestObjectBuilder.GetMovieRequestModel();
+        var movieRequest = MovieObjectBuilder.GetMovieModel();
         var actor = movieRequest.Actors?.FirstOrDefault();
         if (actor != null) actor.FirstName = "";
         // Act

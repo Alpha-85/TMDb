@@ -17,7 +17,7 @@ public class MovieCommandHandlerTests
         var applicationDbContext = Substitute.For<IApplicationDbContext>();
         var logger = Substitute.For<ILogger<AddMovieCommandHandler>>();
         var mapper = AutoMapperHelper.GetAutoMapper();
-        var request = new AddMovieCommand(RequestObjectBuilder.GetMovieRequestModel());
+        var request = new AddMovieCommand(MovieObjectBuilder.GetMovieModel());
         var sut = new AddMovieCommandHandler(applicationDbContext, logger, mapper);
 
         // Act
@@ -39,7 +39,7 @@ public class MovieCommandHandlerTests
             .Throw(new Exception());
         var logger = Substitute.For<ILogger<AddMovieCommandHandler>>();
         var mapper = AutoMapperHelper.GetAutoMapper();
-        var request = new AddMovieCommand(RequestObjectBuilder.GetMovieRequestModel());
+        var request = new AddMovieCommand(MovieObjectBuilder.GetMovieModel());
         var sut = new AddMovieCommandHandler(applicationDbContext, logger, mapper);
 
         // Act
