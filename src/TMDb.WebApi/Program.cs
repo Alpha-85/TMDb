@@ -1,3 +1,4 @@
+using System.Reflection;
 using Microsoft.OpenApi.Models;
 using System.Text.Json.Serialization;
 using FluentValidation.AspNetCore;
@@ -22,9 +23,18 @@ builder.Services.AddMvc()
     .AddFluentValidation();
 
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(opt =>
-    opt.SwaggerDoc("v1", new OpenApiInfo { Title = "WebApi", Version = "v1" }));
+builder.Services.AddSwaggerGen(options =>
+{
+    options.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Version = "v1.0",
+        Title = "TMDb Api",
+        Description = "An ASP.NET Core Web API for CodeAssessment"
+    });
 
+    var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
+});
 
 var app = builder.Build();
 
