@@ -15,5 +15,8 @@
     <ProjectReference Include="..\TMDb.Application\TMDb.Application.csproj" />
     <ProjectReference Include="..\TMDb.Infrastructure\TMDb.Infrastructure.csproj" />
   </ItemGroup>
+	<PropertyGroup>
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+	</PropertyGroup>
 
 </Project>
