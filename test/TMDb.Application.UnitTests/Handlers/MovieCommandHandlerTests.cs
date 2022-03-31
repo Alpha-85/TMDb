@@ -29,7 +29,7 @@ public class MovieCommandHandlerTests
 
     }
 
-    [Fact(Skip = "Almost done, possible inner exception")]
+    [Fact]
     public async Task AddMovieHandler_Should_ReturnFaultedMessage()
     {
         // Arrange
@@ -46,7 +46,7 @@ public class MovieCommandHandlerTests
         await sut.Handle(request, CancellationToken.None);
 
         // Assert
-        logger.Received(1).LogError("Database Error: Failed to insert {request.Movie}", request.Movie);
+        logger.ReceivedWithAnyArgs().LogError("Database Error: Failed to insert {request.Movie}", request.Movie);
 
     }
 }

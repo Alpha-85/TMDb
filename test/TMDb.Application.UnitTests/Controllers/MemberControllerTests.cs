@@ -85,6 +85,40 @@ public class MemberControllerTests
 
     }
 
+    [Fact]
+    public async Task MovieController_Delete_Should_Return_StatusCode404()
+    {
+        // Arrange
+        var mediator = Substitute.For<IMediator>();
+        var sut = new MovieController(mediator);
+        mediator.Send(Arg.Any<DeleteMovieCommand>())
+            .Returns(false);
+
+        // Act
+        var result = await sut.DeleteAsync(1, CancellationToken.None);
+
+        // Assert
+        result.Should().BeOfType<NotFoundResult>();
+
+    }
+
+    [Fact]
+    public async Task MovieController_Delete_Should_Return_StatusCode202()
+    {
+        // Arrange
+        var mediator = Substitute.For<IMediator>();
+        var sut = new MovieController(mediator);
+        mediator.Send(Arg.Any<DeleteMovieCommand>())
+            .Returns(true);
+
+        // Act
+        var result = await sut.DeleteAsync(1, CancellationToken.None);
+
+        // Assert
+        result.Should().BeOfType<AcceptedResult>();
+
+    }
+
 }
 
 
