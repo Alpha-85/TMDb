@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using TMDb.Application.Common.Models.RequestModels;
+using TMDb.Application.Common.Models.MovieModels;
 
 namespace TMDb.Application.Movies.Commands;
 

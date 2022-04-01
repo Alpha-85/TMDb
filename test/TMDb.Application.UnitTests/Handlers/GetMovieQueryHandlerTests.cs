@@ -1,5 +1,5 @@
 ﻿using FluentAssertions;
-using TMDb.Application.Common.Models.RequestModels;
+using TMDb.Application.Common.Models.MovieModels;
 using TMDb.Application.Movies.Queries;
 using TMDb.Application.UnitTests.TestHelpers;
 using Xunit;

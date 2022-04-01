@@ -1,5 +1,4 @@
 ﻿using TMDb.Application.Common.Models.MovieModels;
-using TMDb.Application.Common.Models.RequestModels;
 using TMDb.Domain.Common.Enums;
 using TMDb.Domain.Entities;
 

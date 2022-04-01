@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using TMDb.Application.Common.Models.RequestModels;
+using TMDb.Application.Common.Models.MovieModels;
 
 namespace TMDb.Application.Common.Validators;
 

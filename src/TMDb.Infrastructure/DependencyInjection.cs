@@ -1,11 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Diagnostics.CodeAnalysis;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using TMDb.Application.Common.Interfaces;
 using TMDb.Infrastructure.Persistence;
 using TMDb.Infrastructure.Services;
 
 namespace TMDb.Infrastructure;
-
+[ExcludeFromCodeCoverage]
 public static class DependencyInjection
 {
     public static IServiceCollection AddInfrastructure(this IServiceCollection services)

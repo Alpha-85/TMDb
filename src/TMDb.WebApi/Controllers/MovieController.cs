@@ -1,6 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using TMDb.Application.Common.Models.RequestModels;
+using TMDb.Application.Common.Models.MovieModels;
 using TMDb.Application.Movies.Commands;
 using TMDb.Application.Movies.Queries;
 
