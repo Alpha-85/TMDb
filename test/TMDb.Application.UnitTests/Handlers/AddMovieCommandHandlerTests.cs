@@ -1,20 +1,19 @@
 ﻿using FluentAssertions;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
-using TMDb.Application.Common.Interfaces;
 using TMDb.Application.Movies.Commands;
 using TMDb.Application.UnitTests.TestHelpers;
 using Xunit;
 
 namespace TMDb.Application.UnitTests.Handlers;
 
-public class MovieCommandHandlerTests
+public class AddMovieCommandHandlerTests
 {
     [Fact]
     public async Task AddMovieHandler_Should_AddNewMovie()
     {
         // Arrange
-        var applicationDbContext = Substitute.For<IApplicationDbContext>();
+        var applicationDbContext = DbContextHelper.GetApplicationDbContext();
         var logger = Substitute.For<ILogger<AddMovieCommandHandler>>();
         var mapper = AutoMapperHelper.GetAutoMapper();
         var request = new AddMovieCommand(MovieObjectBuilder.GetMovieModel());
@@ -33,7 +32,7 @@ public class MovieCommandHandlerTests
     public async Task AddMovieHandler_Should_ReturnFaultedMessage()
     {
         // Arrange
-        var applicationDbContext = Substitute.For<IApplicationDbContext>();
+        var applicationDbContext = DbContextHelper.GetApplicationDbContext();
         applicationDbContext
             .When(x => x.SaveChangesAsync(CancellationToken.None))
             .Throw(new Exception());
@@ -47,6 +46,27 @@ public class MovieCommandHandlerTests
 
         // Assert
         logger.ReceivedWithAnyArgs().LogError("Database Error: Failed to insert {request.Movie}", request.Movie);
+
+    }
+
+    [Fact]
+    public async Task AddMovieHandler_Should_Not_AddMovie_If_Exists()
+    {
+        // Arrange
+        var applicationDbContext = DbContextHelper.GetApplicationDbContext();
+        var databaseMovie = MovieObjectBuilder.GetMovie();
+        applicationDbContext.Movies.Add(databaseMovie);
+        await applicationDbContext.SaveChangesAsync(CancellationToken.None);
+        var logger = Substitute.For<ILogger<AddMovieCommandHandler>>();
+        var mapper = AutoMapperHelper.GetAutoMapper();
+        var request = new AddMovieCommand(MovieObjectBuilder.GetMovieModel());
+        var sut = new AddMovieCommandHandler(applicationDbContext, logger, mapper);
+
+        // Act
+        var result = await sut.Handle(request, CancellationToken.None);
+
+        // Assert
+        result.Should().Be(0);
 
     }
 }
