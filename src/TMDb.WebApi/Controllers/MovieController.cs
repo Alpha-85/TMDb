@@ -34,18 +34,22 @@ public class MovieController : ControllerBase
     /// <returns>Adds a new movie</returns>
     /// <response code="400">If validation fails on post. Check error messages.</response>
     /// <response code="201">the "Id" of the newly added movie.</response>
+    /// <response code="409">Server will not process the request, possible already existing entity.</response>
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> CreateAsync([FromBody] MovieModel request,CancellationToken cancellationToken)
+    [ProducesResponseType(StatusCodes.Status409Conflict)]
+    public async Task<IActionResult> CreateAsync([FromBody] MovieModel request, CancellationToken cancellationToken)
     {
 
         var result = await _mediator.Send(new AddMovieCommand(request), cancellationToken);
 
-        if (result is null)
-            return BadRequest();
-
-        return CreatedAtAction("Get", new { id = result }, result);
+        return result switch
+        {
+            null => BadRequest(),
+            0 => Conflict("Server did not process the request"),
+            _ => CreatedAtAction("Get", new { id = result }, result)
+        };
     }
 
     /// <summary>

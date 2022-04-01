@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using TMDb.Application.Common.Interfaces;
 using TMDb.Domain.Entities;
@@ -21,6 +22,12 @@ public class AddMovieCommandHandler : IRequestHandler<AddMovieCommand, int?>
 
     public async Task<int?> Handle(AddMovieCommand request, CancellationToken cancellationToken)
     {
+        var exists = await _context.Movies
+            .AsNoTracking()
+            .Where(x => x.Title == request.Movie.Title)
+            .FirstOrDefaultAsync(cancellationToken);
+
+        if (exists is not null) return 0;
 
         var result = _mapper.Map<Movie>(request.Movie);
 

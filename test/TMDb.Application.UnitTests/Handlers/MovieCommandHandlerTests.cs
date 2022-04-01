@@ -1,7 +1,6 @@
 ﻿using FluentAssertions;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
-using TMDb.Application.Common.Interfaces;
 using TMDb.Application.Movies.Commands;
 using TMDb.Application.UnitTests.TestHelpers;
 using Xunit;
@@ -14,7 +13,8 @@ public class MovieCommandHandlerTests
     public async Task AddMovieHandler_Should_AddNewMovie()
     {
         // Arrange
-        var applicationDbContext = Substitute.For<IApplicationDbContext>();
+        var applicationDbContext = DbContextHelper.GetApplicationDbContext();
+
         var logger = Substitute.For<ILogger<AddMovieCommandHandler>>();
         var mapper = AutoMapperHelper.GetAutoMapper();
         var request = new AddMovieCommand(MovieObjectBuilder.GetMovieModel());
@@ -33,10 +33,12 @@ public class MovieCommandHandlerTests
     public async Task AddMovieHandler_Should_ReturnFaultedMessage()
     {
         // Arrange
-        var applicationDbContext = Substitute.For<IApplicationDbContext>();
+        var applicationDbContext = DbContextHelper.GetApplicationDbContext();
+
         applicationDbContext
             .When(x => x.SaveChangesAsync(CancellationToken.None))
             .Throw(new Exception());
+
         var logger = Substitute.For<ILogger<AddMovieCommandHandler>>();
         var mapper = AutoMapperHelper.GetAutoMapper();
         var request = new AddMovieCommand(MovieObjectBuilder.GetMovieModel());
@@ -49,4 +51,5 @@ public class MovieCommandHandlerTests
         logger.ReceivedWithAnyArgs().LogError("Database Error: Failed to insert {request.Movie}", request.Movie);
 
     }
+
 }
