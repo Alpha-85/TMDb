@@ -7,14 +7,13 @@ using Xunit;
 
 namespace TMDb.Application.UnitTests.Handlers;
 
-public class MovieCommandHandlerTests
+public class AddMovieCommandHandlerTests
 {
     [Fact]
     public async Task AddMovieHandler_Should_AddNewMovie()
     {
         // Arrange
         var applicationDbContext = DbContextHelper.GetApplicationDbContext();
-
         var logger = Substitute.For<ILogger<AddMovieCommandHandler>>();
         var mapper = AutoMapperHelper.GetAutoMapper();
         var request = new AddMovieCommand(MovieObjectBuilder.GetMovieModel());
@@ -34,11 +33,9 @@ public class MovieCommandHandlerTests
     {
         // Arrange
         var applicationDbContext = DbContextHelper.GetApplicationDbContext();
-
         applicationDbContext
             .When(x => x.SaveChangesAsync(CancellationToken.None))
             .Throw(new Exception());
-
         var logger = Substitute.For<ILogger<AddMovieCommandHandler>>();
         var mapper = AutoMapperHelper.GetAutoMapper();
         var request = new AddMovieCommand(MovieObjectBuilder.GetMovieModel());
@@ -52,4 +49,24 @@ public class MovieCommandHandlerTests
 
     }
 
+    [Fact]
+    public async Task AddMovieHandler_Should_Not_AddMovie_If_Exists()
+    {
+        // Arrange
+        var applicationDbContext = DbContextHelper.GetApplicationDbContext();
+        var databaseMovie = MovieObjectBuilder.GetMovie();
+        applicationDbContext.Movies.Add(databaseMovie);
+        await applicationDbContext.SaveChangesAsync(CancellationToken.None);
+        var logger = Substitute.For<ILogger<AddMovieCommandHandler>>();
+        var mapper = AutoMapperHelper.GetAutoMapper();
+        var request = new AddMovieCommand(MovieObjectBuilder.GetMovieModel());
+        var sut = new AddMovieCommandHandler(applicationDbContext, logger, mapper);
+
+        // Act
+        var result = await sut.Handle(request, CancellationToken.None);
+
+        // Assert
+        result.Should().Be(0);
+
+    }
 }
