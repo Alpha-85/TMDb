@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using TMDb.Application.Common.Models.MovieModels;
-using TMDb.Application.Common.Models.RequestModels;
 using TMDb.Domain.Entities;
 
 namespace TMDb.Application.Common.Mappings;

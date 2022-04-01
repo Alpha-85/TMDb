@@ -2,7 +2,7 @@
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using TMDb.Application.Common.Interfaces;
-using TMDb.Application.Common.Models.RequestModels;
+using TMDb.Application.Common.Models.MovieModels;
 
 namespace TMDb.Application.Movies.Queries;
 

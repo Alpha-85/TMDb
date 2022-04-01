@@ -1,7 +1,6 @@
 ﻿using System.Text.Json.Serialization;
-using TMDb.Application.Common.Models.MovieModels;
 
-namespace TMDb.Application.Common.Models.RequestModels;
+namespace TMDb.Application.Common.Models.MovieModels;
 
 public class MovieModel
 {
