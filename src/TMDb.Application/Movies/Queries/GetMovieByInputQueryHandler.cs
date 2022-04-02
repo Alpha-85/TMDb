@@ -45,8 +45,9 @@ public class GetMovieByInputQueryHandler : IRequestHandler<GetMovieByInputQuery,
 
         var totalCount = result.Count();
 
+        var nextPage = totalCount <= 0 ? 0 : page + 1;
 
-        return new PaginationResult(page + 1, totalCount, result);
+        return new PaginationResult(nextPage, totalCount, result);
 
     }
 }
