@@ -25,7 +25,6 @@ public class GetMovieQueryHandler : IRequestHandler<GetMovieQuery, MovieModel>
             .Select(x => _mapper.Map<MovieModel>(x))
             .FirstOrDefaultAsync(cancellationToken);
 
-
         return movie ?? null;
     }
 }

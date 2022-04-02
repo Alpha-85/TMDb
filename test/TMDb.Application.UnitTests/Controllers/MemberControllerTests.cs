@@ -3,6 +3,8 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
 using NSubstitute.ReturnsExtensions;
+using TMDb.Application.Common.Models;
+using TMDb.Application.Common.Models.MovieModels;
 using TMDb.Application.Movies.Commands;
 using TMDb.Application.Movies.Queries;
 using TMDb.Application.UnitTests.TestHelpers;
@@ -116,6 +118,24 @@ public class MemberControllerTests
 
         // Assert
         result.Should().BeOfType<AcceptedResult>();
+
+    }
+
+    [Fact]
+    public async Task MovieController_GetByInput_Should_Return_StatusCode200()
+    {
+        // Arrange
+        var mediator = Substitute.For<IMediator>();
+        var sut = new MovieController(mediator);
+
+        mediator.Send(Arg.Any<GetMovieByInputQuery>())
+            .Returns(new PaginationResult(1, 10, new List<MovieModel>()));
+
+        // Act
+        var result = await sut.FindAsync(1, 10, "test", CancellationToken.None);
+
+        // Assert
+        result.Should().BeOfType<OkObjectResult>();
 
     }
 
