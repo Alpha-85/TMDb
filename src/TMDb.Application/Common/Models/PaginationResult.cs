@@ -2,5 +2,5 @@
 
 namespace TMDb.Application.Common.Models;
 
-public record PaginationResult(IEnumerable<MovieModel> Movies);
+public record PaginationResult(int NextPage,int TotalCount, IEnumerable<MovieModel> Movies);
 

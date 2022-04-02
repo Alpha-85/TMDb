@@ -20,19 +20,22 @@ public class GetMovieByInputQueryHandler : IRequestHandler<GetMovieByInputQuery,
 
     public async Task<PaginationResult> Handle(GetMovieByInputQuery request, CancellationToken cancellationToken)
     {
-        if (string.IsNullOrEmpty(request.SearchString)) return new PaginationResult(new List<MovieModel>());
+        var (pageNumber, requestSize, searchString) = request;
 
-        var page = request.Next ?? 0;
-        var pageSize = request.PageSize ?? 10;
+        if (string.IsNullOrEmpty(searchString)) return new PaginationResult(0, 0, new List<MovieModel>());
+
+        var page = pageNumber < 1 ? 1 : pageNumber;
+        var pageSize = requestSize < 1 ? 10 : requestSize > 100 ? 10 : requestSize;
 
         var movies = await _context.Movies
-            .Include(x => x.Actors)
-            .Include(x => x.Genres)
+            .Include(movie => movie.Actors)
+            .Include(movie => movie.Genres)
             .Where(movie => movie.Title.ToLower()
-                .Contains(request.SearchString.ToLower()))
-            .OrderBy(x => x.Title)
+                .Contains(searchString.ToLower()))
+            .OrderBy(movie => movie.Id)
             .Select(movie => _mapper.Map<MovieModel>(movie))
             .ToListAsync(cancellationToken);
+
 
         var result = movies
             .Select(movie => movie)
@@ -40,7 +43,10 @@ public class GetMovieByInputQueryHandler : IRequestHandler<GetMovieByInputQuery,
             .Take(pageSize)
             .AsQueryable();
 
-        return new PaginationResult(result);
+        var totalCount = result.Count();
+
+
+        return new PaginationResult(page + 1, totalCount, result);
 
     }
 }

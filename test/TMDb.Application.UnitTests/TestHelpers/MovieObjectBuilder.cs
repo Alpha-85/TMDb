@@ -64,4 +64,54 @@ public static class MovieObjectBuilder
 
         return movie;
     }
+
+    public static List<Movie> GetListOfThreeMovies()
+    {
+        var movies = new List<Movie>();
+
+        var movieOne = new Movie
+        {
+            Created = DateTime.MinValue,
+            LastModified = DateTime.MinValue,
+            Id = 1,
+            Title = "Conan the barbarian",
+            Year = 1982,
+            Synopsis = "A text that describes the content",
+            Director = "John Milius",
+            Genres = new List<Genre>(),
+            Actors = new List<Actor>()
+        };
+
+        var movieTwo = new Movie
+        {
+            Created = DateTime.MinValue,
+            LastModified = DateTime.MinValue,
+            Id = 2,
+            Title = "Jaws",
+            Year = 1975,
+            Synopsis = "A text that describes the content",
+            Director = "Stephen Spielberg",
+            Genres = new List<Genre>(),
+            Actors = new List<Actor>()
+        };
+
+        var movieThree = new Movie
+        {
+            Created = DateTime.MinValue,
+            LastModified = DateTime.MinValue,
+            Id = 3,
+            Title = "Robocop",
+            Year = 1987,
+            Synopsis = "A text that describes the content",
+            Director = "Paul Verhoeven",
+            Genres = new List<Genre>(),
+            Actors = new List<Actor>()
+        };
+
+        movies.Add(movieOne);
+        movies.Add(movieTwo);
+        movies.Add(movieThree);
+
+        return movies;
+    }
 }

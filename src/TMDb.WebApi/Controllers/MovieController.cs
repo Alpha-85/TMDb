@@ -98,17 +98,17 @@ public class MovieController : ControllerBase
     /// Gets a paginated result from query
     /// </summary>
     /// <param name="searchString"></param>
-    /// <param name="next"></param>
+    /// <param name="pageNumber"></param>
     /// <param name="pageSize"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     /// <response code="200">List of movies based on query</response>
     [HttpGet("{searchString}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<IActionResult> FindAsync(int? next,int? pageSize,string searchString, CancellationToken cancellationToken)
+    public async Task<IActionResult> FindAsync(int pageNumber, int pageSize, string searchString, CancellationToken cancellationToken)
     {
-        var result = await _mediator.Send(new GetMovieByInputQuery(next,pageSize,searchString), cancellationToken);
-        
+        var result = await _mediator.Send(new GetMovieByInputQuery(pageNumber, pageSize, searchString), cancellationToken);
+
         return Ok(result);
     }
 
