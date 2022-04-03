@@ -129,7 +129,7 @@ public class MemberControllerTests
         var sut = new MovieController(mediator);
 
         mediator.Send(Arg.Any<GetMovieByInputQuery>())
-            .Returns(new PaginationResult(1, 10, new List<MovieModel>()));
+            .Returns(new PaginationResult<MovieModel>(1, 10, new List<MovieModel>()));
 
         // Act
         var result = await sut.FindAsync(1, 10, "test", CancellationToken.None);
