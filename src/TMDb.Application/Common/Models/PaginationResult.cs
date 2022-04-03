@@ -1,6 +1,15 @@
-﻿using TMDb.Application.Common.Models.MovieModels;
+﻿namespace TMDb.Application.Common.Models;
 
-namespace TMDb.Application.Common.Models;
+public class PaginationResult<T> where T : class
+{
+    public int NextPage { get; set; }
+    public int TotalCount { get; set; }
+    public IEnumerable<T> EnumerableQueryResult { get; set; }
 
-public record PaginationResult(int NextPage,int TotalCount, IEnumerable<MovieModel> Movies);
-
+    public PaginationResult(int nextPage, int totalCount, IEnumerable<T> enumerable)
+    {
+        NextPage = nextPage;
+        TotalCount = totalCount;
+        EnumerableQueryResult = enumerable;
+    }
+}

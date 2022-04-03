@@ -7,7 +7,7 @@ using TMDb.Application.Common.Models.MovieModels;
 
 namespace TMDb.Application.Movies.Queries;
 
-public class GetMovieByInputQueryHandler : IRequestHandler<GetMovieByInputQuery, PaginationResult>
+public class GetMovieByInputQueryHandler : IRequestHandler<GetMovieByInputQuery, PaginationResult<MovieModel>>
 {
     private readonly IApplicationDbContext _context;
     private readonly IMapper _mapper;
@@ -18,14 +18,13 @@ public class GetMovieByInputQueryHandler : IRequestHandler<GetMovieByInputQuery,
         _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
     }
 
-    public async Task<PaginationResult> Handle(GetMovieByInputQuery request, CancellationToken cancellationToken)
+    public async Task<PaginationResult<MovieModel>> Handle(GetMovieByInputQuery request, CancellationToken cancellationToken)
     {
         var (pageNumber, requestSize, searchString) = request;
 
-        if (string.IsNullOrEmpty(searchString)) return new PaginationResult(0, 0, new List<MovieModel>());
+        var (page, pageSize) = GuardAgainstInvalidRequestPaginationValues(pageNumber, requestSize);
 
-        var page = pageNumber < 1 ? 1 : pageNumber;
-        var pageSize = requestSize < 1 ? 10 : requestSize > 100 ? 10 : requestSize;
+        if (string.IsNullOrEmpty(searchString)) return new PaginationResult<MovieModel>(0, 0, new List<MovieModel>());
 
         var movies = await _context.Movies
             .Include(movie => movie.Actors)
@@ -47,7 +46,14 @@ public class GetMovieByInputQueryHandler : IRequestHandler<GetMovieByInputQuery,
 
         var nextPage = totalCount <= 0 ? 0 : page + 1;
 
-        return new PaginationResult(nextPage, totalCount, result);
+        return new PaginationResult<MovieModel>(nextPage, totalCount, result);
 
+    }
+
+    private static (int page, int pageSize) GuardAgainstInvalidRequestPaginationValues(int pageNumber, int requestSize)
+    {
+        var page = pageNumber < 1 ? 1 : pageNumber;
+        var pageSize = requestSize < 1 ? 10 : requestSize > 100 ? 10 : requestSize;
+        return (page, pageSize);
     }
 }
